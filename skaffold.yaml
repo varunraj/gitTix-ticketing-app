@@ -5,10 +5,12 @@ deploy:
     manifests: 
       - ./infra/k8s/*
 build:
-  local:
-    push: false
+  # local:
+  #  push: false
+  googleCloudBuild:
+    projectId: neural-land-297915  
   artifacts: 
-    - image: varunrajdocker/auth
+    - image: us.gcr.io/neural-land-297915/auth
       context: auth
       docker:
         dockerfile: Dockerfile

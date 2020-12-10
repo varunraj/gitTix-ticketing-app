@@ -1,0 +1,20 @@
+type 'thisisunsafe' to get through chrome secuity error
+
+google cloud
+------------
+
+Initial login : 
+
+>> glcoud auth login OR gcloud auth application-default login
+
+Project Linking from google cloud:
+
+>> gcloud init  => It will take through a setup of initilization steps to map to project in cloud.
+
+
+After initial set up of the project, use below command to get the k8s context
+
+>>gcloud container clusters get-credentials ticketing-dev
+
+    After above step, we can see two context for kubernetis in docker for windows task bar option.
+
