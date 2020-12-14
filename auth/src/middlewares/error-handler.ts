@@ -26,6 +26,7 @@ export const errorHandler = (err:Error, req: Request, res:Response, next:NextFun
     // }
 
     //console.log('handling all other error')
+    console.log(err)
     
     res.status(400).send({
         errors: [{message:"something went wrong", field:"none"}]
