@@ -18,3 +18,6 @@ After initial set up of the project, use below command to get the k8s context
 
     After above step, we can see two context for kubernetis in docker for windows task bar option.
 
+Create secret for jwt. This is an imperative command.
+-----------------------------------------------------
+    >> kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf

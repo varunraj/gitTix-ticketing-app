@@ -38,7 +38,11 @@ app.all('*', async (req,res)=>{
 app.use(errorHandler);
 
 const start = async ()=>{
-    
+    // below code will make sure that JWT key is available in k8s cluster.
+    if (!process.env.JWT_KEY) {
+        throw new Error('JWT Key must be defined')
+    }
+
     try {
     
         await mongoose.connect('mongodb://auth-mongo-srv:27017/auth',{

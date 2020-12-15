@@ -36,8 +36,20 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+        }
+    }, {
+            toJSON:{  // when we send the user back to browser, we need to send only id and email. this objct will
+            // override the default JSON.stringify method when data is sent back to browser
+                transform(doc, ret){
+                    ret.id = ret._id // rename id
+                    delete ret._id // remove ._id 
+                    delete ret.password // remove password from user document
+                    delete ret.__v; // remove version _v
+
+                }
+        }
     }
-});
+);
 
 // below code is middleaware from mongoose which will be executed any time when user is saved. 
 // we will add password hashing logic here.

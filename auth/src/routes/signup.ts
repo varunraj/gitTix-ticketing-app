@@ -1,9 +1,9 @@
 import express, { Request, Response} from 'express';
-import {body, validationResult} from 'express-validator'
-import { RequestValidationError } from '../errors/request-validation-error'
+import {body} from 'express-validator'
 import {User} from '../models/user'
 import {BadRequestError} from '../errors/bad-request-error'
 import jwt from 'jsonwebtoken'
+import { validateRequest } from '../middlewares/validate-requests'
 
 const router = express.Router();
 
@@ -17,17 +17,10 @@ router.post('/api/users/signup',[
         .trim()
         .isLength({min:4, max:20})
         .withMessage('Password must be between 4 and 20 chars')
-    ], async (req: Request,res:Response)=>{
+    ],
+    validateRequest, // this middlware will look inside req for errors from express-validator
+    async (req: Request,res:Response)=>{
         
-            
-            const errors = validationResult(req)
-
-            if(!errors.isEmpty()) {
-                //return res.status(400).send(errors.array())
-               throw new RequestValidationError(errors.array())
-                
-            }
-
             const {email, password} = req.body;
 
             const existingUser = await User.findOne({email})
@@ -47,8 +40,10 @@ router.post('/api/users/signup',[
             const userJwt = jwt.sign({
                 id: user.id,
                 email:user.email
-            },'asdf' )
+            },process.env.JWT_KEY! ) // JWT_KEY comes from k8s secrets 
+            // ! above tells TS that JWT_KEY is defined and dont throw error
 
+           
             // attach to req.session ( instead of req.session.jwt do below approach )
             // cookie-session middleware will take care of sending cookie to browser- it is 
             // added as an express mw.
