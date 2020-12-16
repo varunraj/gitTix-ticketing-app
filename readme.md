@@ -18,6 +18,8 @@ ticket resale application using micro-services deployed in k8s cluster
     * TypeScript
     * ReactJS
     * Stripe Payment
+    * Jest Testing
+        - super-test
 
 ## Infrastructure
 
