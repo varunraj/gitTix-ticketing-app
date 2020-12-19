@@ -20,7 +20,9 @@ app.use(json());
 app.use(
     cookieSession({
         signed: false, // disable enryption since JWT already encrypted
-        secure: true // only allow https
+        secure: process.env.NODE_ENV !== 'test' // only allow https in prod. When jest 
+                                // runs test , this env variable is is 'test'. So we can get cookies
+                                // in http connection by supertest
     })
 )
 // app.get('/api/users/currentuser', (req,res)=>{
@@ -41,4 +43,4 @@ app.all('*', async (req,res)=>{
 
 app.use(errorHandler);
 
-export default app;
+export {app};

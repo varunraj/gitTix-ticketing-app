@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import app from './app'
+import {app} from './app'
 
 const start = async ()=>{
     // below code will make sure that JWT key is available in k8s cluster.
