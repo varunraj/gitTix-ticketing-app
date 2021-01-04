@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {useState} from 'react'
 
-export default ({url, method, body})=>{
+export default ({url, method, body, onSucess})=>{
 
     // method must be a string like 'post', 'get' etc
     const [errors, setErrors] = useState(null);
@@ -9,6 +9,9 @@ export default ({url, method, body})=>{
         try{
             setErrors(null) // this will clear out existing error before new one is sent
            const response = await axios[method](url, body)
+           if(onSucess){
+                onSucess(response.data);   
+           }
             return response.data
         }catch(err){
             
