@@ -1,4 +1,4 @@
-import buildClient from '../api/build-client' // axious client
+import buildClient from '../api/build-client' // axios client
 
 const LandingPage =  ({currentUser})=>{
     

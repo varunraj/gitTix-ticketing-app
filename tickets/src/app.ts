@@ -7,12 +7,15 @@ import express from 'express'
 import 'express-async-errors'
 import { json } from 'body-parser'
 import cookieSession from 'cookie-session'
-import { currentUserRouter } from './routes/current-user'
-import { signinRouter } from './routes/signin'
-import { signoutRouter } from './routes/signout'
-import { signupRouter } from './routes/signup'
 import { errorHandler } from '@varunrajtickets/common'
-import { NotFoundError } from '@varunrajtickets/common' 
+import { NotFoundError, currentUser } from '@varunrajtickets/common' 
+import {createTicketRouter} from './routes/new'
+import {showTicketRouter} from './routes/show'
+import {indexTicketRouter } from './routes/index'
+import {updateTicketRouter} from './routes/update'
+
+
+
 
 const app = express();
 app.set('trust proxy', true) // trust proxy 
@@ -25,14 +28,14 @@ app.use(
                                 // in http connection by supertest
     })
 )
-// app.get('/api/users/currentuser', (req,res)=>{
-//     res.send("i am good");
-// })
 
-app.use(currentUserRouter)
-app.use(signinRouter)
-app.use(signoutRouter)
-app.use(signupRouter)
+app.use(currentUser) // extract current user and attach to req.currentUser
+
+app.use(createTicketRouter);
+app.use(showTicketRouter);
+app.use(indexTicketRouter)
+app.use(updateTicketRouter);
+
 
 // unknown url, send back not found error
 // throwing an error inside async function dont work without calling next keyword

@@ -20,6 +20,8 @@ ticket resale application using micro-services deployed in k8s cluster
     * Stripe Payment
     * Jest Testing
         - super-test
+    * Common code sharing using npm modules
+    * Skaffold for local k8s development
 
 ## Infrastructure
 
