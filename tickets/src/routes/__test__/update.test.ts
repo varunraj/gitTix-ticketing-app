@@ -81,13 +81,33 @@ it('returns a 400 if the user provides an invalid title or price', async()=>{
         .put(`/api/tickets/${response.body.id}`)
         .set('Cookie', cookie) // new user now
         .send({
-            title:'fsdsadfadsgfertr',
+            title:'fsdsadfadsgghgfertr',
             price: -20
         })
         .expect(400);
 
 })
 
-it('updates the ticket for valid request', ()=>{
+it('updates the ticket for valid request', async()=>{
+  
+    const cookie = global.signin()
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', cookie)
+        .send({
+            title:'dfdsffggd555ksdfdskk111',
+            price:20
+        });
+
+    await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .set('Cookie', cookie) // new user now
+        .send({
+            title:'titlenew',
+            price:120
+        })
+        .expect(200);
+
     
+
 })

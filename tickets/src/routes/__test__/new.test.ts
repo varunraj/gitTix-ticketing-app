@@ -79,7 +79,7 @@ it('creates a ticket for valid request', async()=>{
                     .post('/api/tickets')
                     .set('Cookie',global.signin())
                     .send({
-                        title:'valid title',
+                        title:'validtitle123',
                         price: 10    
                     });
 
