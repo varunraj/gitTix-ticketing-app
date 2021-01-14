@@ -26,14 +26,16 @@ stan.on('connect', ()=>{
                         // lister to send ack automatically. But we can send this manually
                         // If we dont set this option, event could be lost due to errors in client
                         // if not heard back after x time, nats server will retry
-
+                        .setDeliverAllAvailable() // when a new subscription is created, send all events in history
+                        .setDurableName('ticket-service') // this will keep track on all messages processed and missed. 
+                                                            // re-deliver only the ones that are missed.
     // listen to channel
     // queue group is a grouping of all clients during horizonatal scaling
     // one message will be sent to only one member of a queue group.
     const subscription = stan.subscribe(
                 'ticket:created', 
-                'listenerQueueGroup',
-                options
+                'listenerQueueGroup', 
+                 options
             );
 
     subscription.on('message', (msg:Message)=>{
