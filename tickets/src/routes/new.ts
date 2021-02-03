@@ -2,7 +2,7 @@ import express, {Request, Response} from 'express'
 import {currentUser, requireAuth, validateRequest} from '@varunrajtickets/common'
 import {body} from 'express-validator'
 import {Ticket} from '../../src/models/tickets'
-
+import {TicketCreatedPublisher} from '../events/publishers/ticket-created-publisher'
 
 const router = express.Router();
 
@@ -22,6 +22,13 @@ router.post('/api/tickets',
                     })
                     
                     await ticket.save()
+
+                    // await new TicketCreatedPublisher(client).publish({
+                    //     id:ticket.id,   // get all values from ticket that got saved to db
+                    //     title:ticket.title,
+                    //     price: ticket.price,
+                    //     userId: ticket.userId
+                    // })
 
                     res.status(201).send(ticket);
 })
