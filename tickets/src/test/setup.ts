@@ -14,6 +14,8 @@ declare global {
   }
 }
 
+jest.mock('../nats-wrapper'); // rec 320 // redirect nats import with mock nats-wrapper
+
 
 
 // mongodb+srv://dbUser:QAZplm537@cluster0.halij.mongodb.net/dev?retryWrites=true&w=majority
@@ -52,10 +54,19 @@ beforeAll(  async () => {
 
 
 beforeEach(async () => {
+
+  jest.clearAllMocks() // rec 323
+
   const collections = await mongoose.connection.db.collections();
+
+  //await mongoose.connection.collection('tickets').drop()
+
+  //mongoose.connection.db.dropCollection('tickets');
+  //console.log('before each', collections.length)
 
   for (let collection of collections) {
     await collection.deleteMany({});
+    //await collection.deleteOne();
   }
 
 });

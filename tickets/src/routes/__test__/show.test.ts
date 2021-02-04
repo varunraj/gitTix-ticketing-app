@@ -1,6 +1,9 @@
 import request from 'supertest'
 import {app} from '../../app'
 import mongoose from 'mongoose'
+//jest.mock('../../nats-wrapper'); // rec 320 // redirect nats import with mock nats-wrapper
+
+
 
 it('returs 404 if the ticket is not found', async ()=>{
 

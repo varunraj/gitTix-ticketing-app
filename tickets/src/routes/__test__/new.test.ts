@@ -1,6 +1,11 @@
 import request from 'supertest'
 import {app} from '../../app'
 import {Ticket } from '../../models/tickets'
+import {natsWrapper} from '../../nats-wrapper'
+
+//jest.mock('../../nats-wrapper'); // rec 320 // redirect nats import with mock nats-wrapper
+
+
 
 it('has a route handler listening to /api/tickets for post requests', async()=>{
 
@@ -90,3 +95,28 @@ it('creates a ticket for valid request', async()=>{
     expect(tickets[0].price).toEqual(10)
 
 });
+
+// nats testting
+
+it('publishes an event', async ()=>{
+    
+    let tickets = await Ticket.find({})
+    expect (tickets.length).toEqual(0) // no tickets in collection for first time
+
+
+    const response = await request(app)
+                    .post('/api/tickets')
+                    .set('Cookie',global.signin())
+                    .send({
+                        title:'validtitle123',
+                        price: 10    
+                    });
+
+    expect(response.status).toEqual(201);
+
+    // publish fake function will be involked             
+
+    //console.log(natsWrapper);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
+})

@@ -1,5 +1,6 @@
 import request from 'supertest'
 import {app} from '../../app'
+//jest.mock('../../nats-wrapper'); // rec 320 // redirect nats import with mock nats-wrapper
 
 
 const createTicket= ()=>{
